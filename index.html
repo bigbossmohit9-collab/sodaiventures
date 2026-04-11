@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sodai Venture</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#d97706;--acc2:#f59e0b;--abg:rgba(217,119,6,.09);--ari:rgba(217,119,6,.22);--gr:linear-gradient(135deg,#d97706,#f59e0b,#fbbf24);--bg:#f8f7f5;--sf:#fff;--sb:#f3f2ef;--bd:#e8e6e2;--bh:#d4d1cc;--tp:#1a1918;--ts:#706e6a;--tm:#a8a5a0;--r:12px;--sh:0 2px 14px rgba(0,0,0,.07);--shl:0 8px 36px rgba(0,0,0,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--tp);height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+.tb{height:54px;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 16px;gap:11px;flex-shrink:0;z-index:300;}
+.logo{font-family:'Fraunces',serif;font-size:19px;font-weight:700;background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer;flex-shrink:0;}
+.logo-sub{font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);-webkit-text-fill-color:var(--tm);align-self:flex-end;padding-bottom:3px;margin-left:2px;}
+.pbar{display:flex;gap:3px;background:var(--sb);border:1px solid var(--bd);border-radius:10px;padding:3px;flex-shrink:0;}
+.pbtn{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:7px;border:none;cursor:pointer;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;color:var(--ts);background:transparent;transition:all .2s;white-space:nowrap;}
+.pbtn:hover{background:var(--sf);color:var(--tp);}
+.pbtn.on{background:var(--sf);color:var(--acc);box-shadow:0 1px 6px rgba(0,0,0,.08);}
+.sw{flex:1;max-width:480px;position:relative;}
+.si{width:100%;height:36px;background:var(--sb);border:1.5px solid var(--bd);border-radius:8px;padding:0 34px 0 36px;font-family:'Sora',sans-serif;font-size:13.5px;color:var(--tp);transition:all .2s;outline:none;}
+.si:focus{background:var(--sf);border-color:var(--acc);box-shadow:0 0 0 3px var(--ari);}
+.si::placeholder{color:var(--tm);}
+.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;}
+.scl{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--bd);border:none;color:var(--ts);font-size:10px;cursor:pointer;display:none;align-items:center;justify-content:center;}
+.scl:hover{background:var(--bh);}
+.scl.on{display:flex;}
+#ac{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);box-shadow:var(--shl);overflow:hidden;display:none;z-index:500;}
+.acr{padding:9px 14px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ts);cursor:pointer;transition:background .1s;}
+.acr:hover,.acr.on{background:var(--sb);color:var(--tp);}
+.nbtn{height:32px;padding:0 12px;border-radius:7px;border:1.5px solid var(--bd);background:transparent;color:var(--ts);font-family:'Sora',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;}
+.nbtn:hover{background:var(--sb);}
+.layout{flex:1;display:flex;overflow:hidden;}
+.sidebar{width:215px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:10px 7px;overflow-y:auto;}
+.sbs{padding:4px 10px 5px;font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--tm);margin-top:10px;}
+.sbs:first-child{margin-top:0;}
+.sit{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;color:var(--ts);font-size:12.5px;transition:all .15s;}
+.sit:hover{background:rgba(0,0,0,.05);color:var(--tp);}
+.sit.on{background:var(--abg);color:var(--acc);}
+.sdiv{height:1px;background:var(--bd);margin:8px 6px;}
+.hi{display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:7px;cursor:pointer;color:var(--tm);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s;}
+.hi:hover{color:var(--ts);background:rgba(0,0,0,.04);}
+.hd{width:5px;height:5px;border-radius:50%;background:var(--bh);flex-shrink:0;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.bc{height:36px;background:var(--sf);border-bottom:1px solid var(--bd);padding:0 18px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);flex-shrink:0;}
+.bcs{color:var(--bh);}
+.bca{color:var(--ts);font-weight:500;}
+.bctag{margin-left:auto;padding:3px 10px;border-radius:20px;font-size:11px;background:var(--abg);color:var(--acc);font-weight:600;display:none;}
+.split{flex:1;display:flex;overflow:hidden;}
+.rescol{width:270px;flex-shrink:0;background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;}
+.rh{padding:12px 16px 9px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);flex-shrink:0;}
+.rht{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tm);}
+.rhc{font-size:11px;color:var(--tm);background:var(--sb);padding:2px 8px;border-radius:20px;}
+.rl{overflow-y:auto;flex:1;}
+.rc{padding:12px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .13s;}
+.rc:hover{background:var(--bg);}
+.rc.sel{background:var(--abg);border-left:3px solid var(--acc);padding-left:13px;}
+.rct{font-size:13px;font-weight:600;color:var(--tp);margin-bottom:3px;font-family:'Fraunces',serif;line-height:1.3;}
+.rc:hover .rct,.rc.sel .rct{color:var(--acc);}
+.rcs{font-size:11.5px;color:var(--tm);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.rcf{margin-top:4px;display:flex;gap:9px;font-size:10.5px;color:#ccc;}
+.re{padding:28px 16px;text-align:center;color:var(--tm);font-size:13px;}
+.rpanel{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.tabs{display:flex;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;padding-left:16px;}
+.tab{padding:10px 18px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--ts);border-bottom:2px solid transparent;font-family:'Sora',sans-serif;transition:all .15s;}
+.tab:hover{color:var(--tp);}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc);}
+.artcol{flex:1;overflow-y:auto;background:var(--sf);}
+.artwrap{max-width:660px;margin:0 auto;padding:40px 50px 80px;}
+.pbadge{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:20px;background:var(--abg);color:var(--acc);font-size:11.5px;font-weight:600;margin-bottom:14px;border:1px solid var(--ari);}
+.ttsbar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--abg);border:1px solid var(--ari);border-radius:10px;margin-bottom:18px;}
+.ttsbtn{padding:5px 14px;border-radius:7px;font-family:'Sora',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;border:none;transition:all .17s;}
+.ttsbtn.p{background:var(--acc);color:white;}
+.ttsbtn.s{background:var(--sb);color:var(--ts);border:1px solid var(--bd);}
+.arthero{width:100%;max-height:280px;object-fit:cover;border-radius:var(--r);margin-bottom:24px;display:block;border:1px solid var(--bd);}
+.artt{font-family:'Fraunces',serif;font-size:30px;font-weight:700;letter-spacing:-.6px;line-height:1.15;color:var(--tp);margin-bottom:6px;}
+.artd{font-size:13.5px;color:var(--tm);margin-bottom:18px;line-height:1.5;}
+.props{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:22px;}
+.pr{display:flex;align-items:center;padding:8px 14px;gap:14px;border-bottom:1px solid var(--bd);font-size:13px;}
+.pr:last-child{border-bottom:none;}
+.pk{min-width:112px;color:var(--tm);font-size:12px;}
+.pl{color:var(--acc);text-decoration:none;font-size:12.5px;}
+.pl:hover{text-decoration:underline;}
+.ndiv{height:1px;background:var(--bd);margin:18px 0;}
+.callout{display:flex;gap:11px;background:var(--sb);border:1px solid var(--bd);border-radius:var(--r);padding:12px 15px;margin-bottom:14px;font-size:14px;line-height:1.72;color:var(--ts);}
+.kfi{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px;color:var(--ts);line-height:1.6;}
+.kfi:last-child{border-bottom:none;}
+.kfd{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;margin-top:7px;}
+.sh{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--tp);margin:22px 0 9px;letter-spacing:-.3px;}
+.ab{color:#4a4846;font-size:14px;line-height:1.85;}
+.ab p{margin-bottom:12px;}
+.fuqi{padding:9px 14px;background:var(--sb);border:1.5px solid var(--bd);border-radius:8px;font-size:13px;color:var(--ts);cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:6px;transition:all .17s;}
+.fuqi:hover{border-color:var(--acc);color:var(--acc);background:var(--abg);}
+.relrow{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;}
+.relpill{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;background:var(--bg);border:1.5px solid var(--bd);color:var(--ts);font-size:12.5px;cursor:pointer;transition:all .17s;}
+.relpill:hover{border-color:var(--acc);color:var(--acc);background:var(--abg);}
+.ph{color:var(--tm);font-size:10px;}
+.abar{display:flex;gap:7px;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:1px solid var(--bd);}
+.abtn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-family:'Sora',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .17s;border:1.5px solid var(--bd);color:var(--ts);background:var(--sf);}
+.abtn:hover{background:var(--bg);border-color:var(--bh);}
+.abtn.p{background:var(--gr);color:white;border-color:transparent;}
+/* PHOTOS */
+.photo-grid{columns:3 150px;column-gap:10px;padding:0 24px 40px;}
+.photo-item{break-inside:avoid;margin-bottom:10px;border-radius:10px;overflow:hidden;cursor:pointer;border:1px solid var(--bd);transition:transform .18s;}
+.photo-item:hover{transform:scale(1.015);}
+.photo-item img{width:100%;display:block;object-fit:cover;}
+.photo-caption{padding:5px 8px;font-size:10.5px;color:var(--tm);background:var(--sf);border-top:1px solid var(--bd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* LIGHTBOX */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:1000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
+.lb.on{display:flex;}
+.lb img{max-width:90vw;max-height:76vh;object-fit:contain;border-radius:12px;}
+.lb-title{color:rgba(255,255,255,.8);font-size:13px;max-width:500px;text-align:center;}
+.lb-btns{display:flex;gap:10px;}
+.lb-btn{padding:7px 16px;border-radius:8px;background:rgba(255,255,255,.15);color:white;font-size:13px;border:1px solid rgba(255,255,255,.3);cursor:pointer;text-decoration:none;font-family:'Sora',sans-serif;}
+.lb-btn:hover{background:rgba(255,255,255,.25);}
+/* SOURCES */
+.src-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:9px;padding:20px 24px 14px;}
+.src-card{display:flex;align-items:center;gap:12px;padding:13px 15px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);text-decoration:none;transition:all .17s;}
+.src-card:hover{transform:translateY(-1px);box-shadow:var(--sh);}
+.src-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.src-name{font-size:13px;font-weight:600;color:var(--tp);margin-bottom:2px;}
+.src-desc{font-size:11.5px;color:var(--tm);}
+.src-more{margin:0 24px 28px;padding:14px 16px;background:var(--sb);border-radius:var(--r);border:1px solid var(--bd);}
+.src-mt{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ts);margin-bottom:10px;}
+.src-pills{display:flex;flex-wrap:wrap;gap:7px;}
+.src-pill{padding:5px 13px;border-radius:20px;background:var(--sf);border:1px solid var(--bd);color:var(--ts);font-size:12.5px;text-decoration:none;transition:all .15s;}
+.src-pill:hover{border-color:var(--acc);color:var(--acc);}
+/* WELCOME */
+.welcome{max-width:560px;margin:0 auto;padding:44px 50px 80px;}
+.we{font-size:40px;margin-bottom:12px;display:block;}
+.wt{font-family:'Fraunces',serif;font-size:34px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:var(--tp);margin-bottom:9px;}
+.wts{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ws{font-size:14px;color:var(--tm);line-height:1.7;margin-bottom:26px;max-width:400px;}
+.stories{display:flex;gap:13px;overflow-x:auto;padding-bottom:4px;margin-bottom:26px;scrollbar-width:none;}
+.stories::-webkit-scrollbar{display:none;}
+.stb{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;transition:transform .18s;}
+.stb:hover{transform:scale(1.07);}
+.stri{width:52px;height:52px;border-radius:50%;padding:2.5px;background:var(--gr);display:flex;align-items:center;justify-content:center;}
+.stin{width:100%;height:100%;border-radius:50%;background:var(--sf);border:2.5px solid var(--sf);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.stlbl{font-size:10.5px;color:var(--tm);max-width:56px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.qg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qc{padding:13px 14px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);cursor:pointer;transition:all .18s;}
+.qc:hover{border-color:var(--acc);box-shadow:var(--sh);transform:translateY(-1px);}
+.qce{font-size:17px;margin-bottom:5px;display:block;}
+.qct{font-size:13px;font-weight:600;color:var(--tp);margin-bottom:2px;}
+.qcs{font-size:11.5px;color:var(--tm);}
+.lw{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;gap:12px;}
+.sp{width:26px;height:26px;border:2.5px solid var(--bd);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ll{font-size:12.5px;color:var(--tm);}
+.fi{animation:fu .28s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<div class="tb">
+  <div style="display:flex;align-items:flex-end;gap:5px;cursor:pointer" onclick="goHome()">
+    <div class="logo">Sodai Venture</div>
+    <div class="logo-sub">AI Search</div>
+  </div>
+  <div class="pbar">
+    <button class="pbtn on" data-p="claude"  onclick="switchProvider('claude')">🟠 Claude</button>
+    <button class="pbtn"    data-p="gemini"  onclick="switchProvider('gemini')">🔵 Gemini</button>
+    <button class="pbtn"    data-p="chatgpt" onclick="switchProvider('chatgpt')">🟢 ChatGPT</button>
+    <button class="pbtn"    data-p="grok"    onclick="switchProvider('grok')">⚫ Grok</button>
+  </div>
+  <div class="sw">
+    <span class="sico">🔍</span>
+    <input class="si" id="sinp" type="text" placeholder="Search anything — Photos · TTS · 12+ Sources…" autocomplete="off" spellcheck="false">
+    <button class="scl" id="scl" onclick="clearSearch()">✕</button>
+    <div id="ac"></div>
+  </div>
+  <div style="display:flex;gap:6px;margin-left:auto">
+    <button class="nbtn" onclick="clearHistory()">Clear History</button>
+    <button class="nbtn" onclick="goHome()">🏠 Home</button>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sbs" style="margin-top:0">Explore</div>
+    <div class="sit" data-q="World War I" onclick="trigger('World War I')"><span style="width:20px;text-align:center">🌍</span>World War I</div>
+    <div class="sit" data-q="French Revolution" onclick="trigger('French Revolution')"><span style="width:20px;text-align:center">⚔️</span>French Revolution</div>
+    <div class="sit" data-q="Cold War" onclick="trigger('Cold War')"><span style="width:20px;text-align:center">☢️</span>Cold War</div>
+    <div class="sit" data-q="Indian independence" onclick="trigger('Indian independence')"><span style="width:20px;text-align:center">🇮🇳</span>Indian Independence</div>
+    <div class="sit" data-q="Artificial Intelligence" onclick="trigger('Artificial Intelligence')"><span style="width:20px;text-align:center">🤖</span>Artificial Intelligence</div>
+    <div class="sit" data-q="Climate change" onclick="trigger('Climate change')"><span style="width:20px;text-align:center">🌡️</span>Climate Change</div>
+    <div class="sit" data-q="Democracy" onclick="trigger('Democracy')"><span style="width:20px;text-align:center">🗳️</span>Democracy</div>
+    <div class="sit" data-q="Quantum computing" onclick="trigger('Quantum computing')"><span style="width:20px;text-align:center">⚛️</span>Quantum Computing</div>
+    <div class="sit" data-q="Human rights" onclick="trigger('Human rights')"><span style="width:20px;text-align:center">✊</span>Human Rights</div>
+    <div class="sit" data-q="Black hole" onclick="trigger('Black hole')"><span style="width:20px;text-align:center">🌑</span>Black Holes</div>
+    <div class="sdiv"></div>
+    <div class="sbs">Recent</div>
+    <div id="hist"></div>
+  </div>
+
+  <div class="main">
+    <div class="bc">
+      <span>Sodai Venture</span><span class="bcs">›</span>
+      <span id="bcpage" class="bca">Home</span>
+      <div class="bctag" id="bctag"></div>
+    </div>
+    <div class="split">
+      <div class="rescol">
+        <div class="rh">
+          <span class="rht">Wikipedia Sources</span>
+          <span class="rhc" id="rcount">—</span>
+        </div>
+        <div class="rl" id="rl"><div class="re">Sources appear here after search</div></div>
+      </div>
+      <div class="rpanel">
+        <div class="tabs" id="tabs" style="display:none">
+          <button class="tab on" id="tab-article" onclick="switchTab('article')">📄 Article</button>
+          <button class="tab"    id="tab-photos"  onclick="switchTab('photos')">🖼️ Photos</button>
+          <button class="tab"    id="tab-sources" onclick="switchTab('sources')">🔗 All Sources</button>
+        </div>
+        <div class="artcol" id="artcol"></div>
+        <div class="artcol" id="photocol" style="display:none"></div>
+        <div class="artcol" id="srccol"   style="display:none"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lb" id="lb" onclick="closeLb()">
+  <img id="lb-img" src="" alt="">
+  <div class="lb-title" id="lb-title"></div>
+  <div class="lb-btns" onclick="event.stopPropagation()">
+    <a class="lb-btn" id="lb-open" href="#" target="_blank" rel="noopener">Open full size ↗</a>
+    <button class="lb-btn" onclick="closeLb()">Close</button>
+  </div>
+</div>
+
+<script>
+var PROV={
+  claude: {name:'Claude', logo:'🟠',tag:'Anthropic',acc:'#d97706',acc2:'#f59e0b',abg:'rgba(217,119,6,.09)',ari:'rgba(217,119,6,.22)',gr:'linear-gradient(135deg,#d97706,#f59e0b,#fbbf24)'},
+  gemini: {name:'Gemini', logo:'🔵',tag:'Google',   acc:'#1a73e8',acc2:'#4285f4',abg:'rgba(26,115,232,.09)',ari:'rgba(26,115,232,.22)',gr:'linear-gradient(135deg,#4285f4,#34a853,#fbbc05,#ea4335)'},
+  chatgpt:{name:'ChatGPT',logo:'🟢',tag:'OpenAI',   acc:'#10a37f',acc2:'#19c37d',abg:'rgba(16,163,127,.09)',ari:'rgba(16,163,127,.22)',gr:'linear-gradient(135deg,#10a37f,#19c37d,#5ce0ba)'},
+  grok:   {name:'Grok',   logo:'⚫',tag:'xAI',      acc:'#374151',acc2:'#6b7280',abg:'rgba(55,65,81,.09)',ari:'rgba(55,65,81,.22)',gr:'linear-gradient(135deg,#111827,#374151,#9ca3af)'}
+};
+var SOURCES=[
+  {name:'Wikipedia',         icon:'📖',color:'#3366cc',url:function(q){return'https://en.wikipedia.org/wiki/Special:Search/'+enc(q);},             desc:'Free encyclopedia'},
+  {name:'Britannica',        icon:'🏛️',color:'#b22222',url:function(q){return'https://www.britannica.com/search?query='+enc(q);},                   desc:'Expert encyclopedia'},
+  {name:'National Geographic',icon:'🌍',color:'#fcaa00',url:function(q){return'https://www.nationalgeographic.com/search?q='+enc(q);},               desc:'Science & exploration'},
+  {name:'BBC',               icon:'📻',color:'#cc0000',url:function(q){return'https://www.bbc.co.uk/search?q='+enc(q);},                             desc:'News & docs'},
+  {name:'History.com',       icon:'🏺',color:'#8b6914',url:function(q){return'https://www.history.com/search#q='+enc(q);},                          desc:'Historical events'},
+  {name:'Khan Academy',      icon:'🎓',color:'#14bf96',url:function(q){return'https://www.khanacademy.org/search?page_search_query='+enc(q);},       desc:'Free education'},
+  {name:'Google Scholar',    icon:'🔬',color:'#4285f4',url:function(q){return'https://scholar.google.com/scholar?q='+enc(q);},                       desc:'Academic papers'},
+  {name:'JSTOR',             icon:'📜',color:'#2c5282',url:function(q){return'https://www.jstor.org/action/doBasicSearch?Query='+enc(q);},            desc:'Academic journals'},
+  {name:'Stanford Encyc.',   icon:'🧠',color:'#8c1515',url:function(q){return'https://plato.stanford.edu/search/searcher.py?query='+enc(q);},        desc:'Philosophy'},
+  {name:'Smithsonian',       icon:'🔭',color:'#004165',url:function(q){return'https://www.si.edu/search?edan_q='+enc(q);},                           desc:'Museum & research'},
+  {name:'Internet Archive',  icon:'🗄️',color:'#428bca',url:function(q){return'https://archive.org/search?query='+enc(q);},                           desc:'Digital library'},
+  {name:'YouTube',           icon:'▶️',color:'#ff0000',url:function(q){return'https://www.youtube.com/results?search_query='+enc(q)+'+documentary';},desc:'Docs & lectures'},
+];
+var MORE=[
+  {l:'Google',       u:function(q){return'https://www.google.com/search?q='+enc(q);}},
+  {l:'Google Images',u:function(q){return'https://www.google.com/images?q='+enc(q);}},
+  {l:'Google Maps',  u:function(q){return'https://www.google.com/maps/search/'+enc(q);}},
+  {l:'DuckDuckGo',   u:function(q){return'https://duckduckgo.com/?q='+enc(q);}},
+  {l:'Bing',         u:function(q){return'https://www.bing.com/search?q='+enc(q);}},
+  {l:'Reddit',       u:function(q){return'https://www.reddit.com/search/?q='+enc(q);}},
+  {l:'Quora',        u:function(q){return'https://www.quora.com/search?q='+enc(q);}},
+  {l:'TED Talks',    u:function(q){return'https://www.ted.com/search?q='+enc(q);}},
+];
+var curP='claude',curQ='',curResults=[],curPhotos=[];
+var histArr=JSON.parse(localStorage.getItem('sv3_hist')||'[]');
+var acTimer,acIdx=-1,acList=[];
+var ttsSpeaking=false,ttsPaused=false;
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function enc(s){return encodeURIComponent(s||'');}
+function sh(s){return(s||'').replace(/<[^>]*>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&quot;/g,'"');}
+function fd(ts){if(!ts)return'';try{return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}catch{return'';}}
+function ge(t,d){var s=((t||'')+(d||'')).toLowerCase();if(/war|battle|military/.test(s))return'⚔️';if(/space|star|planet|galaxy/.test(s))return'🌌';if(/science|physics|chemistry|biology/.test(s))return'🔬';if(/music|song|band/.test(s))return'🎵';if(/politic|government|president/.test(s))return'🏛️';if(/book|novel|author/.test(s))return'📚';if(/computer|software|tech/.test(s))return'💻';if(/health|medicine|disease/.test(s))return'🏥';if(/sport|football|cricket/.test(s))return'🏅';if(/art|paint|museum/.test(s))return'🎨';if(/climate|environment/.test(s))return'🌿';if(/economy|finance|trade/.test(s))return'💰';if(/law|justice|rights/.test(s))return'⚖️';if(/film|movie/.test(s))return'🎬';if(/philosophy|ethics/.test(s))return'🧠';if(/religion|faith/.test(s))return'🕌';return'📖';}
+
+function applyTheme(pid){
+  var p=PROV[pid];var r=document.documentElement;
+  r.style.setProperty('--acc',p.acc);r.style.setProperty('--acc2',p.acc2);
+  r.style.setProperty('--abg',p.abg);r.style.setProperty('--ari',p.ari);
+  r.style.setProperty('--gr',p.gr);
+  document.querySelectorAll('.pbtn').forEach(function(b){b.classList.toggle('on',b.dataset.p===pid);});
+  var tag=document.getElementById('bctag');
+  if(tag&&tag.style.display!=='none')tag.textContent=p.logo+' '+p.name+' · '+p.tag;
+}
+function switchProvider(pid){curP=pid;applyTheme(pid);if(curQ)doSearch(curQ);}
+
+var inp=document.getElementById('sinp'),acEl=document.getElementById('ac'),sclBtn=document.getElementById('scl');
+inp.addEventListener('keydown',function(e){if(e.key==='ArrowDown'){e.preventDefault();moveAC(1);}else if(e.key==='ArrowUp'){e.preventDefault();moveAC(-1);}else if(e.key==='Enter'){e.preventDefault();doSearch(inp.value.trim());}else if(e.key==='Escape')hideAC();});
+inp.addEventListener('input',function(){sclBtn.classList.toggle('on',inp.value.length>0);clearTimeout(acTimer);var q=inp.value.trim();if(q.length<2){hideAC();return;}acTimer=setTimeout(function(){fetchAC(q);},220);});
+document.addEventListener('click',function(e){if(!e.target.closest('.sw'))hideAC();});
+function clearSearch(){inp.value='';sclBtn.classList.remove('on');hideAC();inp.focus();}
+function fetchAC(q){fetch('https://en.wikipedia.org/w/api.php?action=opensearch&search='+enc(q)+'&limit=7&format=json&origin=*').then(function(r){return r.json();}).then(function(d){showAC(d[1]||[]);}).catch(function(){});}
+function showAC(items){if(!items.length){hideAC();return;}acList=items;acIdx=-1;acEl.innerHTML=items.map(function(s,i){return'<div class="acr" onmousedown="pickAC('+i+')">🔍 '+esc(s)+'</div>';}).join('');acEl.style.display='block';}
+function hideAC(){acEl.style.display='none';acIdx=-1;}
+function moveAC(d){var els=acEl.querySelectorAll('.acr');if(!els.length)return;if(els[acIdx])els[acIdx].classList.remove('on');acIdx=Math.max(-1,Math.min(acList.length-1,acIdx+d));if(acIdx>=0){els[acIdx].classList.add('on');inp.value=acList[acIdx];}}
+function pickAC(i){inp.value=acList[i];hideAC();doSearch(acList[i]);}
+
+function doSearch(q){
+  if(!q||!q.trim())return;
+  curQ=q.trim();inp.value=curQ;sclBtn.classList.add('on');
+  hideAC();addHistory(curQ);setSBActive(curQ);setBreadcrumb(curQ);
+  switchTab('article');document.getElementById('tabs').style.display='none';
+  stopTTS();showLoading();
+  Promise.all([
+    fetch('https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch='+enc(curQ)+'&srlimit=12&srprop=snippet|titlesnippet|wordcount|timestamp&format=json&origin=*').then(function(r){return r.json();}),
+    fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+enc(curQ)).then(function(r){return r.ok?r.json():null;}),
+    fetchPhotos(curQ)
+  ]).then(function(res){
+    curResults=(res[0]&&res[0].query&&res[0].query.search)||[];
+    var summary=res[1];curPhotos=res[2]||[];
+    renderResults(curResults);
+    renderArticle(summary,curQ,curResults[0]);
+    renderPhotos(curQ,curPhotos);
+    renderSources(curQ);
+    document.getElementById('tabs').style.display='flex';
+    document.getElementById('tab-photos').textContent='🖼️ Photos'+(curPhotos.length?' ('+curPhotos.length+')':'');
+  }).catch(function(e){console.error(e);showError(curQ);});
+}
+
+function fetchPhotos(q){
+  return fetch('https://en.wikipedia.org/api/rest_v1/page/media-list/'+enc(q))
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(d){
+      if(!d||!d.items)return fetchPhotos2(q);
+      var imgs=(d.items||[]).filter(function(i){return i.type==='image'&&i.thumbnail&&i.thumbnail.source&&!i.title.toLowerCase().includes('icon')&&!i.title.toLowerCase().includes('logo')&&!i.title.toLowerCase().includes('.svg');})
+        .map(function(i){return{src:i.thumbnail.source.replace(/\/\d+px-/,'/400px-'),original:i.original?i.original.source:i.thumbnail.source,title:(i.title||'').replace('File:','').replace(/_/g,' ').replace(/\.[^.]+$/,'')};});
+      return imgs.length>=2?imgs.slice(0,20):fetchPhotos2(q);
+    }).catch(function(){return fetchPhotos2(q);});
+}
+function fetchPhotos2(q){
+  return fetch('https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch='+enc(q)+'&gsrlimit=6&prop=pageimages&piprop=thumbnail&pithumbsize=400&format=json&origin=*')
+    .then(function(r){return r.json();})
+    .then(function(d){var pg=d&&d.query&&d.query.pages?d.query.pages:{};return Object.values(pg).filter(function(p){return p.thumbnail&&p.thumbnail.source;}).map(function(p){return{src:p.thumbnail.source,original:p.thumbnail.source,title:p.title||''};});})
+    .catch(function(){return[];});
+}
+
+function renderResults(results){
+  document.getElementById('rcount').textContent=results.length||'0';
+  if(!results.length){document.getElementById('rl').innerHTML='<div class="re">No results found</div>';return;}
+  document.getElementById('rl').innerHTML=results.map(function(r,i){
+    return'<div class="rc '+(i===0?'sel':'')+'" id="rcc'+i+'" onclick="openWiki('+i+')">'
+      +'<div class="rct">'+esc(sh(r.titlesnippet||r.title))+'</div>'
+      +'<div class="rcs">'+esc(sh(r.snippet))+'</div>'
+      +'<div class="rcf"><span>📄 '+((r.wordcount||0).toLocaleString())+' words</span><span>'+fd(r.timestamp)+'</span></div>'
+      +'</div>';
+  }).join('');
+}
+function openWiki(i){document.querySelectorAll('.rc').forEach(function(c,j){c.classList.toggle('sel',j===i);});var r=curResults[i];if(r)window.open('https://en.wikipedia.org/wiki/'+enc(r.title),'_blank','noopener');}
+
+function renderArticle(data,query,wikiTop){
+  var p=PROV[curP];
+  var title=data?data.title:query,desc=data?data.description:'',extract=data?data.extract:'';
+  var thumb=data&&data.thumbnail?data.thumbnail.source:null;
+  var wikiUrl=wikiTop?'https://en.wikipedia.org/wiki/'+enc(wikiTop.title):'https://en.wikipedia.org/wiki/Special:Search/'+enc(query);
+  var mobUrl=wikiTop?'https://en.m.wikipedia.org/wiki/'+enc(wikiTop.title):'';
+  var editUrl=wikiTop?'https://en.wikipedia.org/w/index.php?title='+enc(wikiTop.title)+'&action=edit':'';
+  var histUrl=wikiTop?'https://en.wikipedia.org/w/index.php?title='+enc(wikiTop.title)+'&action=history':'';
+  if(data&&data.content_urls&&data.content_urls.desktop){wikiUrl=data.content_urls.desktop.page;if(data.content_urls.mobile)mobUrl=data.content_urls.mobile.page;}
+  var icon=ge(title,desc);
+  var paras=(extract||'').split('\n').filter(function(x){return x.trim();});
+  var related=getRelated(title,extract);
+  var ttsText=paras.slice(0,5).join(' ').replace(/\s+/g,' ').trim().substring(0,2000);
+
+  var propRows=[
+    {k:'🔗 Wikipedia', href:wikiUrl,v:'Read full article'},
+    {k:'🏛️ Britannica',href:'https://www.britannica.com/search?query='+enc(query),v:'Britannica article'},
+    {k:'🌍 Nat. Geo',  href:'https://www.nationalgeographic.com/search?q='+enc(query),v:'National Geographic'},
+    {k:'📻 BBC',       href:'https://www.bbc.co.uk/search?q='+enc(query),v:'BBC coverage'},
+    {k:'🎓 Khan Acad.',href:'https://www.khanacademy.org/search?page_search_query='+enc(query),v:'Khan Academy'},
+    {k:'🔬 Scholar',   href:'https://scholar.google.com/scholar?q='+enc(query),v:'Academic papers'},
+  ];
+  if(mobUrl) propRows.push({k:'📱 Mobile',  href:mobUrl, v:'Wikipedia mobile'});
+  if(editUrl)propRows.push({k:'✏️ Edit',    href:editUrl,v:'Edit Wikipedia'});
+  if(histUrl)propRows.push({k:'🕓 History', href:histUrl,v:'Revision history'});
+  propRows.push({k:'🤖 Answered by',href:null,v:p.name+' · '+p.tag});
+
+  var h='<div class="artwrap fi" id="artwrapdiv">';
+  h+='<div class="pbadge">'+p.logo+' '+esc(p.name)+' <span style="opacity:.55;font-weight:400">· '+esc(p.tag)+'</span></div>';
+  h+='<div class="ttsbar"><span style="font-size:16px">🔊</span><span style="font-size:12.5px;color:var(--ts);flex:1">Text-to-Speech</span>'
+    +'<button class="ttsbtn p" id="tbplay" onclick="startTTS()">▶ Listen</button>'
+    +'<button class="ttsbtn s" id="tbpause" onclick="pauseTTS()" style="display:none">⏸ Pause</button>'
+    +'<button class="ttsbtn p" id="tbresume" onclick="resumeTTS()" style="display:none">▶ Resume</button>'
+    +'<button class="ttsbtn s" id="tbstop" onclick="stopTTS()" style="display:none">■ Stop</button>'
+    +'</div>';
+  if(thumb)h+='<img class="arthero" src="'+esc(thumb)+'" alt="'+esc(title)+'" onerror="this.style.display=\'none\'">';
+  h+='<span style="font-size:36px;margin-bottom:10px;display:block;line-height:1">'+icon+'</span>';
+  h+='<h1 class="artt">'+esc(title)+'</h1>';
+  if(desc)h+='<p class="artd">'+esc(desc)+'</p>';
+  h+='<div class="props">';
+  propRows.forEach(function(row,i){
+    h+='<div class="pr"'+(i===propRows.length-1?' style="border-bottom:none"':'')+'>'
+      +'<span class="pk">'+row.k+'</span><span style="flex:1">';
+    if(row.href)h+='<a class="pl" href="'+esc(row.href)+'" target="_blank" rel="noopener">'+esc(row.v)+' ↗</a>';
+    else h+='<span style="font-size:13px;color:var(--tp)">'+esc(row.v)+'</span>';
+    h+='</span></div>';
+  });
+  h+='</div><div class="ndiv"></div>';
+  if(paras.length)h+='<div class="callout"><span style="font-size:17px;flex-shrink:0">💡</span><div>'+esc(paras[0])+'</div></div>';
+  if(paras.length>1){h+='<div class="sh">Overview</div><div class="ab">';paras.slice(1,5).forEach(function(x){h+='<p>'+esc(x)+'</p>';});h+='</div>';}
+  if(related.length){
+    h+='<div class="ndiv"></div><div class="sh">Related Topics</div><div class="relrow">';
+    related.forEach(function(t){h+='<div class="relpill" onclick="trigger(\''+esc(t)+'\')"><span class="ph">#</span>'+esc(t)+'</div>';});
+    h+='</div>';
+  }
+  var fuqs=['What caused '+title+'?','What is the significance of '+title+'?','How did '+title+' change the world?'];
+  h+='<div class="sh">Follow-up Questions</div>';
+  fuqs.forEach(function(q){h+='<div class="fuqi" onclick="trigger(\''+esc(q.replace(/\?$/,''))+'\')"><span style="color:var(--tm);font-size:11px">→</span>'+esc(q)+'</div>';});
+  h+='<div class="abar">'
+    +'<a class="abtn p" href="'+esc(wikiUrl)+'" target="_blank" rel="noopener">↗ Full Article</a>'
+    +'<a class="abtn" href="https://www.britannica.com/search?query='+enc(query)+'" target="_blank" rel="noopener">🏛️ Britannica</a>'
+    +(mobUrl?'<a class="abtn" href="'+esc(mobUrl)+'" target="_blank" rel="noopener">📱 Mobile</a>':'')
+    +(editUrl?'<a class="abtn" href="'+esc(editUrl)+'" target="_blank" rel="noopener">✏️ Edit</a>':'')
+    +'<a class="abtn" href="https://scholar.google.com/scholar?q='+enc(query)+'" target="_blank" rel="noopener">🔬 Scholar</a>'
+    +'<a class="abtn" href="https://www.nationalgeographic.com/search?q='+enc(query)+'" target="_blank" rel="noopener">🌍 Nat.Geo</a>'
+    +'<a class="abtn" href="https://www.youtube.com/results?search_query='+enc(query)+'+documentary" target="_blank" rel="noopener">▶️ YouTube</a>'
+    +'</div></div>';
+
+  var col=document.getElementById('artcol');
+  col.innerHTML=h;col.dataset.tts=ttsText;col.scrollTop=0;
+}
+
+function renderPhotos(query,photos){
+  var col=document.getElementById('photocol');
+  if(!photos.length){col.innerHTML='<div style="text-align:center;padding:70px 20px;color:var(--tm)"><div style="font-size:40px;margin-bottom:12px">🖼️</div><div style="font-size:15px;font-weight:500;color:var(--ts);margin-bottom:6px">No photos found</div><div style="font-size:13px">Try a broader search term</div></div>';return;}
+  var h='<div style="padding:20px 24px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd)">'
+    +'<span style="font-size:20px">🖼️</span>'
+    +'<div><div style="font-size:15px;font-weight:500;color:var(--tp)">Photos — '+esc(query)+'</div>'
+    +'<div style="font-size:12px;color:var(--tm)">'+photos.length+' images · Click to enlarge</div></div>'
+    +'<a href="https://commons.wikimedia.org/w/index.php?search='+enc(query)+'" target="_blank" rel="noopener" style="margin-left:auto;color:var(--acc);font-size:12.5px;text-decoration:none">View all on Commons ↗</a>'
+    +'</div>'
+    +'<div class="photo-grid" style="margin-top:14px">';
+  photos.forEach(function(p,i){
+    h+='<div class="photo-item" onclick="openLb('+i+')">'
+      +'<img src="'+esc(p.src)+'" alt="'+esc(p.title)+'" loading="lazy" onerror="this.closest(\'.photo-item\').style.display=\'none\'">'
+      +'<div class="photo-caption">'+esc(p.title||'Image')+'</div>'
+      +'</div>';
+  });
+  h+='</div>';
+  col.innerHTML=h;
+}
+
+function renderSources(query){
+  var col=document.getElementById('srccol');
+  var h='<div style="padding:20px 24px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd)">'
+    +'<span style="font-size:20px">🔗</span>'
+    +'<div><div style="font-size:15px;font-weight:500;color:var(--tp)">All Sources — '+esc(query)+'</div>'
+    +'<div style="font-size:12px;color:var(--tm)">'+SOURCES.length+' knowledge platforms</div></div>'
+    +'</div>'
+    +'<div class="src-grid">';
+  SOURCES.forEach(function(s){
+    h+='<a class="src-card" href="'+esc(s.url(query))+'" target="_blank" rel="noopener" '
+      +'onmouseover="this.style.borderColor=\''+s.color+'\'" onmouseout="this.style.borderColor=\'\'">'
+      +'<div class="src-icon" style="background:'+s.color+'18">'+s.icon+'</div>'
+      +'<div style="flex:1;min-width:0"><div class="src-name">'+esc(s.name)+'</div><div class="src-desc">'+esc(s.desc)+'</div></div>'
+      +'<span style="font-size:13px;color:var(--tm);margin-left:auto">↗</span>'
+      +'</a>';
+  });
+  h+='</div><div class="src-more"><div class="src-mt">Also search on</div><div class="src-pills">';
+  MORE.forEach(function(l){h+='<a class="src-pill" href="'+esc(l.u(query))+'" target="_blank" rel="noopener">'+esc(l.l)+' ↗</a>';});
+  h+='</div></div>';
+  col.innerHTML=h;
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  document.getElementById('tab-'+tab).classList.add('on');
+  document.getElementById('artcol').style.display=tab==='article'?'block':'none';
+  document.getElementById('photocol').style.display=tab==='photos'?'block':'none';
+  document.getElementById('srccol').style.display=tab==='sources'?'block':'none';
+  if(tab!=='article')stopTTS();
+}
+
+function startTTS(){
+  if(!window.speechSynthesis)return alert('Text-to-speech not supported in your browser.');
+  var text=document.getElementById('artcol').dataset.tts||'No content.';
+  window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text);
+  u.rate=0.9;u.pitch=1;u.volume=1;
+  u.onstart=function(){ttsSpeaking=true;ttsPaused=false;updateTTS();};
+  u.onend=u.onerror=function(){ttsSpeaking=false;ttsPaused=false;updateTTS();};
+  window.speechSynthesis.speak(u);
+}
+function pauseTTS(){if(window.speechSynthesis.speaking){window.speechSynthesis.pause();ttsPaused=true;updateTTS();}}
+function resumeTTS(){if(window.speechSynthesis.paused){window.speechSynthesis.resume();ttsPaused=false;updateTTS();}}
+function stopTTS(){if(window.speechSynthesis)window.speechSynthesis.cancel();ttsSpeaking=false;ttsPaused=false;updateTTS();}
+function updateTTS(){
+  var pl=document.getElementById('tbplay'),pa=document.getElementById('tbpause'),re=document.getElementById('tbresume'),st=document.getElementById('tbstop');
+  if(!pl)return;
+  pl.style.display=ttsSpeaking?'none':'inline-block';
+  pa.style.display=(ttsSpeaking&&!ttsPaused)?'inline-block':'none';
+  re.style.display=(ttsSpeaking&&ttsPaused)?'inline-block':'none';
+  st.style.display=ttsSpeaking?'inline-block':'none';
+}
+
+function openLb(i){var p=curPhotos[i];if(!p)return;document.getElementById('lb-img').src=p.original||p.src;document.getElementById('lb-title').textContent=p.title||'';document.getElementById('lb-open').href=p.original||p.src;document.getElementById('lb').classList.add('on');}
+function closeLb(){document.getElementById('lb').classList.remove('on');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();});
+
+function getRelated(title,text){
+  var skip=new Set(['This','They','Their','There','These','When','While','After','Since','During','Before']);
+  return[...new Set(((text)||'').match(/\b[A-Z][a-zA-Z]{3,}\b/g)||[])].filter(function(w){return w!==title&&!skip.has(w)&&w.length>4;}).slice(0,12);
+}
+function showLoading(){
+  var p=PROV[curP];
+  document.getElementById('rl').innerHTML='<div class="lw"><div class="sp"></div><div class="ll">Finding sources…</div></div>';
+  document.getElementById('rcount').textContent='…';
+  document.getElementById('artcol').innerHTML='<div class="artwrap"><div class="lw" style="min-height:50vh"><div class="sp"></div><div class="ll">'+esc(p.name)+' is searching…</div></div></div>';
+  document.getElementById('artcol').style.display='block';
+  document.getElementById('photocol').style.display='none';
+  document.getElementById('srccol').style.display='none';
+}
+function showError(q){
+  document.getElementById('rl').innerHTML='<div class="re">No results found</div>';
+  document.getElementById('rcount').textContent='0';
+  document.getElementById('artcol').innerHTML='<div class="artwrap"><div style="text-align:center;padding:60px 20px"><div style="font-size:36px;margin-bottom:10px">🔍</div><div style="font-size:17px;font-weight:600;margin-bottom:7px">No results for "'+esc(q)+'"</div><div style="font-size:13px;color:var(--tm)">Try rephrasing your query.</div><div style="margin-top:16px"><a class="abtn" href="https://en.wikipedia.org/wiki/Special:Search/'+enc(q)+'" target="_blank" rel="noopener">🔎 Search Wikipedia</a></div></div></div>';
+}
+function addHistory(q){histArr=[q,...histArr.filter(function(h){return h!==q;})].slice(0,20);localStorage.setItem('sv3_hist',JSON.stringify(histArr));renderHistory();}
+function renderHistory(){var el=document.getElementById('hist');el.innerHTML=histArr.length?histArr.map(function(h){return'<div class="hi" onclick="trigger(\''+esc(h)+'\')" title="'+esc(h)+'"><span class="hd"></span>'+esc(h)+'</div>';}).join(''):'<div style="padding:5px 10px;font-size:12px;color:var(--tm)">No searches yet</div>';}
+function clearHistory(){histArr=[];localStorage.removeItem('sv3_hist');renderHistory();}
+function trigger(q){inp.value=q;sclBtn.classList.add('on');doSearch(q);setSBActive(q);}
+function setSBActive(q){document.querySelectorAll('.sit').forEach(function(el){el.classList.toggle('on',el.dataset.q===q);});}
+function setBreadcrumb(q){document.getElementById('bcpage').textContent=q;var tag=document.getElementById('bctag');var p=PROV[curP];tag.textContent=p.logo+' '+p.name+' · '+p.tag;tag.style.display='block';}
+function goHome(){
+  inp.value='';sclBtn.classList.remove('on');stopTTS();setSBActive(null);curQ='';curResults=[];curPhotos=[];
+  document.getElementById('bcpage').textContent='Home';document.getElementById('bctag').style.display='none';
+  document.getElementById('rl').innerHTML='<div class="re">Sources appear here after search</div>';
+  document.getElementById('rcount').textContent='—';
+  document.getElementById('tabs').style.display='none';
+  switchTab('article');renderWelcome();
+}
+function renderWelcome(){
+  var sts=[{q:'World War I',i:'🌍',l:'WW1'},{q:'Mahatma Gandhi',i:'🕊️',l:'Gandhi'},{q:'Black hole',i:'🌑',l:'Black Hole'},{q:'Roman Empire',i:'🏛️',l:'Rome'},{q:'DNA',i:'🧬',l:'DNA'},{q:'Artificial Intelligence',i:'🤖',l:'AI'},{q:'Treaty of Versailles',i:'📜',l:'Versailles'},{q:'Python programming',i:'🐍',l:'Python'}];
+  var cards=[{q:'French Revolution',i:'⚔️',t:'French Revolution',s:'1789 · Political upheaval'},{q:'Climate change',i:'🌡️',t:'Climate Change',s:'Global warming & policy'},{q:'Quantum computing',i:'⚛️',t:'Quantum Computing',s:'Future of computation'},{q:'Democracy',i:'🗳️',t:'Democracy',s:'Governance & politics'}];
+  var h='<div class="welcome"><span class="we">✨</span><div class="wt">Ask Anything,<br><span class="wts">Get Real Answers</span></div><div class="ws">Switch AI providers · Explore photos · Listen with TTS · Search Wikipedia, Britannica, National Geographic, BBC, Khan Academy, Google Scholar & more.</div><div class="stories">';
+  sts.forEach(function(s){h+='<div class="stb" onclick="trigger(\''+esc(s.q)+'\')"><div class="stri"><div class="stin">'+s.i+'</div></div><span class="stlbl">'+esc(s.l)+'</span></div>';});
+  h+='</div><div class="qg">';
+  cards.forEach(function(c){h+='<div class="qc" onclick="trigger(\''+esc(c.q)+'\')"><span class="qce">'+c.i+'</span><div class="qct">'+esc(c.t)+'</div><div class="qcs">'+esc(c.s)+'</div></div>';});
+  h+='</div></div>';
+  document.getElementById('artcol').innerHTML=h;document.getElementById('artcol').style.display='block';
+}
+applyTheme('claude');renderHistory();renderWelcome();inp.focus();
+</script>
+</body>
+</html>
